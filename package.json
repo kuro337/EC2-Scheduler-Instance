@@ -1,0 +1,22 @@
+{
+  "name": "ec2-scheduler-instance",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Chinmay337/EC2-Scheduler-Instance.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Chinmay337/EC2-Scheduler-Instance/issues"
+  },
+  "homepage": "https://github.com/Chinmay337/EC2-Scheduler-Instance#readme",
+  "dependencies": {
+    "axios": "^1.1.3"
+  }
+}
