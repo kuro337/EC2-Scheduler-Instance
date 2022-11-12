@@ -1,14 +1,14 @@
 const axios = require("axios");
 
 const endpoints = [
-  { url: process.env.ARM_FLOAT_GO, needArray: false },
-  { url: process.env.ARM_INT_GO, needArray: true },
-  { url: process.env.INTEL_FLOAT_GO, needArray: false },
-  { url: process.env.INTEL_INT_GO, needArray: true },
-  { url: process.env.ARM_FLOAT_JS, needArray: false },
-  { url: process.env.ARM_INT_JS, needArray: true },
-  { url: process.env.INTEL_FLOAT_JS, needArray: false },
-  { url: process.env.INTEL_INT_JS, needArray: true },
+  { id: "AFG", url: process.env.ARM_FLOAT_GO, needArray: false },
+  { id: "AIG", url: process.env.ARM_INT_GO, needArray: true },
+  { id: "IFG", url: process.env.INTEL_FLOAT_GO, needArray: false },
+  { id: "IIG", url: process.env.INTEL_INT_GO, needArray: true },
+  { id: "AFJ", url: process.env.ARM_FLOAT_JS, needArray: false },
+  { id: "AIJ", url: process.env.ARM_INT_JS, needArray: true },
+  { id: "IFJ", url: process.env.INTEL_FLOAT_JS, needArray: false },
+  { id: "IIJ", url: process.env.INTEL_INT_JS, needArray: true },
 ];
 
 // const endpoints = [
@@ -22,8 +22,8 @@ const endpoints = [
 //   },
 // ];
 
-const TOTAL_NUMBERS_MIN = 80;
-const TOTAL_NUMBERS_MAX = 120;
+const TOTAL_NUMBERS_MIN = 50;
+const TOTAL_NUMBERS_MAX = 70;
 const BIG_NUMBERS = 20;
 
 const BURST_DURATION = 15 * 60 * 1000; // 15 minutes in Milliseconds = 15m * 60s * 1000ms
@@ -55,12 +55,18 @@ const preparePayloads = () => {
 // makeRequest : Call single endpoint
 //-----------------------------------------------
 const makeRequest = async (endpoint, payloads) => {
-  // console.log("Calling: ", endpoint.url);
+  console.log(`Calling: ${endpoint.id} ${endpoint.url}`);
   const payload = endpoint.needArray
     ? payloads.intPayload
     : payloads.floatPayload;
-  const res = await axios.post(endpoint.url, payload);
-  const data = res.data;
+
+  try {
+    const res = await axios.post(endpoint.url, payload);
+    const data = res.data;
+  } catch (error) {
+    console.log(`Error in ${endpoint.id} ${endpoint.url}`);
+  }
+
   // console.log(data);
 };
 
@@ -82,7 +88,12 @@ const doWork = async () => {
     await burstAllEndpoints(payloads);
     numIteration++;
   }
-  console.log(`Finished ${numIteration} iterations at `, new Date());
+  let mstime = new Date().getTime() - startTime.getTime();
+  mstime = (mstime / 1000).toFixed(3);
+  console.log(
+    `Finished ${numIteration} iterations in ${mstime}s at `,
+    new Date()
+  );
 };
 
 doWork();
