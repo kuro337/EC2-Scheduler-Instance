@@ -105,7 +105,7 @@ doWork();
 // yum install -y nodejs git
 
 // Bootstrapping steps
-// git clone https://github.com/Chinmay337/EC2-Scheduler-Instance.git
+// git clone https://github.com/kuro337/EC2-Scheduler-Instance.git
 // cd EC2-Scheduler-Instance
 // npm init -y
 // npm i axios
